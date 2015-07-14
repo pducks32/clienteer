@@ -1,4 +1,4 @@
-
+require "pry"
 module Clienteer
   module Digestor
     class PhaseCreation
@@ -6,7 +6,10 @@ module Clienteer
       end
 
       def process(row)
-        row["phase"] = Phase.find(number: row["phase"])
+        $count += 1
+        binding.pry unless $count >= 20
+        row["phase"] = Phase.where(number: row["phase"]).first
+        row
       end
     end
   end
