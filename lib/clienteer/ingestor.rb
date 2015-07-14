@@ -1,6 +1,6 @@
 require_relative "ingestor/mindbody"
 
 module Clienteer
-  class Ingestor
+  module Ingestor
   end
 end
