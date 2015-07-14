@@ -1,5 +1,5 @@
 require "json"
-
+require "pry"
 module Clienteer
   module Digestor
     class IdealProteinCrossReference
@@ -9,30 +9,39 @@ module Clienteer
       end
 
       def optimized_data
-        @optimized_data ||= @data.group_by { |c| c["last_name"][0] }
-      end
-
-      def process(row)
-        ideal_protein_client = find_ideal_protein_client(row)
-        return nil if person.nil?
-        row.tap do |r|
-          r["ideal_subscription_id"] = person["ideal_subscription_id"]
-          r["phase"] = person["phase"]
-          r["ideal_protein_birthday"] = person["birthday"]
+        @optimized_data ||= @data.group_by do |c|
+          ln = c["last_name"]
         end
       end
 
+      def process(row)
+        person = find_ideal_protein_client(row)
+        return nil if person.nil?
+        row.tap do |r|
+          r["ideal_subscription_id"] = person["ideal_subscription_id"].to_i
+          r["phase"] = person["phase"].to_i
+          r["ideal_protein_birthday"] = person["birthday"]
+        end
+      rescue
+        $stderr.puts(row.inspect)
+        raise
+      end
+
       def find_ideal_protein_client(row)
-        person = find_by_email(row["raw"].email) || find_by_name(last: row["raw"].last_name, first: row["raw"].first_name) || ask_for_verification(row)
+        person = find_by_email(row[:raw].email) || find_by_name(last: row[:raw].last_name, first: row[:raw].first_name) || ask_for_verification(row)
       end
 
       def find_by_name(first:, last:)
         first_letter = last[0]
-        @optimized_data[first_letter].find { |r| r["first_name"] == first && r["last_name"] == last }
+        if @optimized_data[first_letter].nil?
+          @data.find { |r| r["first_name"].downcase == first.downcase && r["last_name"].downcase == last.downcase }
+        else
+          @optimized_data.find { |r| r["first_name"].downcase == first.downcase && r["last_name"].downcase == last.downcase }
+        end
       end
 
       def find_by_email(email)
-        @data.find { |c| c["email"] == email }
+        @data.find { |c| c["email"].downcase == email.downcase }
       end
 
       def ask_for_verification(row)
@@ -44,7 +53,8 @@ module Clienteer
         # text << "Should I skip this person or not?".magenta.bold
         # print text.join("\n")
         # bool = IO.gets.chomp!.include?("y")
-        $skipped_people << row["raw"].id
+        $skipped_people << row[:raw].id
+        nil
       end
 
     end
