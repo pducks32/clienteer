@@ -22,10 +22,10 @@ module Clienteer
     config.log_level   = :debug # Savon logging level. Default is :debug, options are [:debug, :info, :warn, :error, :fatal]
   end
 
-  def self.call
+  def self.call(ingestor: Ingester::Mindbody)
     $skipped_people = []
     job_definition = Kiba.parse do
-      source Ingester::Mindbody
+      source ingestor
       transform Sanitizer::NilFinder
       transform Sanitizer::Name
       transform Digester::IdealProteinCrossReference
