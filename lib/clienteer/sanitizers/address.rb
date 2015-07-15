@@ -4,13 +4,17 @@ module Clienteer
     class Address
 
       def process(row)
-        address = row["address"]
-        return nil unless check_zip_code address
-        clean_state address
-        row
+        if valid_zip_code? row["address"]
+          clean_state row["address"]
+          return row
+        else
+          row[:reason] = "zip code invalid"
+          $skipped_people << row
+          return nil
+        end
       end
 
-      def check_zip_code(address)
+      def valid_zip_code?(address)
         address.zip_code.match /\A\d{5}(-\d{4})?\Z/
       end
 

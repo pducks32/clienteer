@@ -1,5 +1,4 @@
-require "json"
-require "pry"
+
 module Clienteer
   module Digester
     class IdealProteinCrossReference
@@ -16,7 +15,11 @@ module Clienteer
 
       def process(row)
         person = find_ideal_protein_client(row)
-        return nil if person.nil?
+        if person.nil?
+          row[:reason] = "ideal protein subscription not found"
+          $skipped_people << row
+          return nil
+        end
         row.tap do |r|
           r["ideal_subscription_id"] = person["ideal_subscription_id"].to_i
           r["phase"] = person["phase"].to_i
@@ -53,7 +56,6 @@ module Clienteer
         # text << "Should I skip this person or not?".magenta.bold
         # print text.join("\n")
         # bool = IO.gets.chomp!.include?("y")
-        $skipped_people << row[:raw].id
         nil
       end
 
