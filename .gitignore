@@ -11,3 +11,5 @@
 data/ideal_protein.json
 
 data/ideal_protein.clean.json
+
+*.gem
