@@ -1,7 +1,7 @@
 require "json"
 require "pry"
 module Clienteer
-  module Digestor
+  module Digester
     class IdealProteinCrossReference
       def initialize
         @data = JSON.parse File.read("data/ideal_protein.clean.json")

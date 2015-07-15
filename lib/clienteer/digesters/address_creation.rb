@@ -1,6 +1,6 @@
 
 module Clienteer
-  module Digestor
+  module Digester
     class AddressCreation
       def initialize
       end

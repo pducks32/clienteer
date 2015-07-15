@@ -1,5 +1,5 @@
 module Clienteer
-  module Digestor
+  module Digester
     class IndexesCleanUp
       def initialize
       end

@@ -1,7 +1,7 @@
 require "clienteer/version"
-require "clienteer/ingestor"
-require "clienteer/outgestor"
-require "clienteer/digestor"
+require "clienteer/ingester"
+require "clienteer/outgester"
+require "clienteer/digester"
 
 require "kiba"
 require "mindbody-api"
@@ -19,11 +19,11 @@ module Clienteer
     $count = 0
     $skipped_people = []
     job_definition = Kiba.parse do
-      source Ingestor::Mindbody
-      transform Digestor::IdealProteinCrossReference
-      transform Digestor::AddressCreation
-      transform Digestor::PhaseCreation
-      destination Outgestor::Maliero
+      source Ingester::Mindbody
+      transform Digester::IdealProteinCrossReference
+      transform Digester::AddressCreation
+      transform Digester::PhaseCreation
+      destination Outgester::Maliero
     end
 
     Kiba.run job_definition

@@ -1,6 +1,6 @@
 require "pry"
 module Clienteer
-  module Digestor
+  module Digester
     class PhaseCreation
       def initialize
       end
