@@ -2,9 +2,16 @@ require "clienteer/version"
 require "clienteer/ingester"
 require "clienteer/outgester"
 require "clienteer/digester"
+require "clienteer/sanitizer"
 
 require "kiba"
 require "mindbody-api"
+require "json"
+
+require 'clienteer/railtie' if defined?(Rails)
+
+require 'dotenv'
+Dotenv.load
 
 module Clienteer
 
@@ -16,20 +23,22 @@ module Clienteer
   end
 
   def self.call
-    $count = 0
     $skipped_people = []
     job_definition = Kiba.parse do
       source Ingester::Mindbody
+      transform Sanitizer::NilFinder
+      transform Sanitizer::Name
       transform Digester::IdealProteinCrossReference
       transform Digester::AddressCreation
+      transform Sanitizer::Address
       transform Digester::PhaseCreation
       destination Outgester::Maliero
     end
 
     Kiba.run job_definition
 
-    File.open("data/skipped_people", "a+") do |f|
-      f.write $skipped_people.join(",")
+    File.open("data/skipped_people.yaml", "a+") do |f|
+      f.write YAML.dump $skipped_people
     end
 
   end

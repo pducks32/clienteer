@@ -1,5 +1,8 @@
 require 'open-uri'
 require 'json'
+
+require 'dotenv/tasks'
+
 module IdealProtein
   class Clean
     EDIT_URL_REGEX = /\/clinic\/(\d+)\/dieter\/(\d+)\/edit/.freeze
@@ -45,7 +48,7 @@ module IdealProtein
       end
 
       def make_request(url: )
-        buffer = open(url, "Cookie" => COOKIES).read
+        buffer = open(url, "Cookie" => LOGIN_COOKIES).read
         JSON.parse(buffer)
       end
 
@@ -56,21 +59,24 @@ module IdealProtein
   end
 end
 
+
 namespace "ideal_protein" do
 
   task :default => :clean
 
   desc "Cleans Ideal Protein client information"
-  task :clean do
+  task :clean => :dotenv do
     json = IdealProtein::Clean.cleaned_data
+    Dir.mkdir "data" unless Dir.exists? "data"
     File.open("data/ideal_protein.clean.json", "w+") do |f|
       f.write(JSON.pretty_generate(json))
     end
   end
 
   desc "Updates Ideal Protein client information"
-  task :update do
+  task :update => :dotenv do
     json = IdealProtein::Update.get_clients
+    Dir.mkdir "data" unless Dir.exists? "data"
     File.open("data/ideal_protein.json", "w+") do |f|
       f.write(JSON.pretty_generate(json))
     end
