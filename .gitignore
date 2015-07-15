@@ -8,8 +8,8 @@
 /spec/reports/
 /tmp/
 
-data/ideal_protein.json
-
-data/ideal_protein.clean.json
+/data/
 
 *.gem
+
+.env
