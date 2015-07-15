@@ -4,4 +4,3 @@ source 'https://rubygems.org'
 gemspec
 
 gem "mindbody-api", git: "https://github.com/wingrunr21/mindbody-api.git"
-gem 'dotenv-rails'

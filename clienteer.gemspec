@@ -21,6 +21,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "kiba", "~> 0.6"
   spec.add_runtime_dependency "ruby-progressbar", "~> 1.7"
   spec.add_runtime_dependency "mindbody-api"
+  spec.add_runtime_dependency "dotenv-rails"
 
   spec.add_development_dependency "bundler", "~> 1.10"
   spec.add_development_dependency "rake", "~> 10.0"
