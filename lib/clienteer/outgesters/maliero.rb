@@ -6,7 +6,6 @@ module Clienteer
       end
 
       def write(row)
-        $progressbar.increment
         @clients << new_client(row)
       end
 
@@ -33,8 +32,6 @@ module Clienteer
       end
 
       def close
-        $stderr.puts "\n\n\nHELLO\n\n\n\n"
-        binding.pry
         Client.transaction do
           success = @clients.map(&:save)
           unless success.all?

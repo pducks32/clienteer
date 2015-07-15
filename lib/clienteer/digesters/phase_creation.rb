@@ -6,8 +6,6 @@ module Clienteer
       end
 
       def process(row)
-        $count += 1
-        binding.pry unless $count >= 20
         row["phase"] = Phase.where(number: row["phase"]).first
         row
       end
