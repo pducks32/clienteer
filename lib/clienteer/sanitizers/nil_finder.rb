@@ -1,11 +1,11 @@
 
 module Clienteer
-  module Sanitizers
+  module Sanitizer
     class NilFinder
 
       def process(row)
         raw = row[:raw]
-        attrs = row, raw, raw.first_name, raw.last_name, raw.email
+        attrs = [row, raw, raw.first_name, raw.last_name, raw.email]
         return nil if contains_nils? attrs
         row
       end

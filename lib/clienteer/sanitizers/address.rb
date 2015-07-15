@@ -1,6 +1,6 @@
 
 module Clienteer
-  module Sanitizers
+  module Sanitizer
     class Address
 
       def process(row)

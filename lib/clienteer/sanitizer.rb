@@ -1,5 +1,5 @@
-require_relative "sanitizer/nil_finder"
-require_relative "sanitizer/address"
+require_relative "sanitizers/nil_finder"
+require_relative "sanitizers/address"
 
 module Clienteer
   module Sanitizer
