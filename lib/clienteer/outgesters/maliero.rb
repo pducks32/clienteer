@@ -18,7 +18,7 @@ module Clienteer
           # c.blood_work = row["blood_work"]
           # c.constant_contact = row["constant_contact"]
           c.email = row[:raw].email
-          # c.health_profile = row["health_profile"]
+          c.health_profile = true
           c.ideal_subscription_id = row["ideal_subscription_id"].to_s
           c.ideal_protein_subscription = !row["ideal_subscription_id"].nil?
           # c.needs_blood_work = row["needs_blood_work"]
@@ -27,6 +27,8 @@ module Clienteer
           c.phase = row["phase"]
           c.phone_number = row[:raw].home_phone || row[:raw].mobile_phone || nil
           c.address = row["address"]
+          c.build_referral
+          c.build_fitness_profile
         end
       end
 
