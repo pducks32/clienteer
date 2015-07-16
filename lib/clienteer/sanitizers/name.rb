@@ -5,7 +5,7 @@ module Clienteer
 
       def process(row)
         names = [row[:raw].first_name, row[:raw].last_name].compact
-        if names.length == 1 && names[0].include? (" ")
+        if names.length == 1 && names[0].include?(" ")
           names = names[0].split(" ")
           row[:raw].first_name, row[:raw].last_name = *names
           return row if names.all? {|n| proper? n }
