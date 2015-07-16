@@ -10,7 +10,7 @@ module Clienteer
       end
 
       def new_client(row)
-        Client.find_or_create_by(first_name: row[:raw].first_name, last_name: row[:raw].first_name) do |c|
+        Client.find_or_create_by(first_name: row[:raw].first_name.capitalize, last_name: row[:raw].first_name.capitalize) do |c|
           c.mindbody_id = row[:raw].id.to_s
           c.birthdate = row[:raw].birth_date
           c.gender = row[:raw].gender
