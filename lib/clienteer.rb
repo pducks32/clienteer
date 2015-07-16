@@ -37,7 +37,7 @@ module Clienteer
 
     Kiba.run job_definition
 
-    File.open("data/skipped_people.yaml", "a+") do |f|
+    File.open("data/skipped_people.yml", "a+") do |f|
       f.write YAML.dump $skipped_people
     end
 

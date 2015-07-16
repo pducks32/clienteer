@@ -4,7 +4,7 @@ module Clienteer
     class YAMLFile
 
       def self.get_clients
-        YAML.load_file("data/mindbody.yaml")
+        YAML.load_file("data/mindbody.yml")
       end
 
       def initialize
@@ -15,7 +15,8 @@ module Clienteer
       def each
         @clients.each do |c|
           $progressbar.increment
-          yield c
+          object = {raw: c}
+          yield object
         end
       end
     end
