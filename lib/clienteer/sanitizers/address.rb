@@ -15,7 +15,7 @@ module Clienteer
       end
 
       def valid_zip_code?(address)
-        address.zip_code && address.zip_code.match(/\A\d{5}(-\d{4})?\Z/)
+        address.zip_code && address.zip_code.to_s.match(/\A\d{5}(-\d{4})?\Z/)
       end
 
       def clean_state(address)
