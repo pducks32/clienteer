@@ -8,8 +8,8 @@ module Clienteer
         if names.length == 1 && names[0].include?(" ")
           names = names[0].split(" ")
           row[:raw].first_name, row[:raw].last_name = *names
-          return row if names.all? {|n| proper? n }
         end
+        return row if names.all? {|n| proper? n }
         return remove(row)
       end
 
