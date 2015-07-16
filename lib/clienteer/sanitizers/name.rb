@@ -4,19 +4,23 @@ module Clienteer
     class Name
 
       def process(row)
-        names = [row[:raw].first_name, row[:raw].last_name]
-        names = names.compact.join(" ").split(" ") if names.compact.length == 1
-        if names.all? {|n| proper? n }
-          return row
-        else
-          row[:reason] = "names not valid"
-          $skipped_people << row
-          return nil
+        names = [row[:raw].first_name, row[:raw].last_name].compact
+        if names.length == 1 && names[0].include? (" ")
+          names = names[0].split(" ")
+          row[:raw].first_name, row[:raw].last_name = *names
+          return row if names.all? {|n| proper? n }
         end
+        return remove(row)
       end
 
       def proper?(name)
-        return false if name.match /\d/
+        !name.match /\d/
+      end
+
+      def remove(row)
+        row[:reason] = "names not valid"
+        $skipped_people << row
+        nil
       end
     end
   end
