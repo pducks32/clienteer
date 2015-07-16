@@ -15,11 +15,11 @@ module Clienteer
       end
 
       def valid_zip_code?(address)
-        address.zip_code.match /\A\d{5}(-\d{4})?\Z/
+        address.zip_code && address.zip_code.match /\A\d{5}(-\d{4})?\Z/
       end
 
       def clean_state(address)
-        address.state = "Illinois" if address.state.match /il/i
+        address.state = "Illinois" if address.state && address.state.match /il/i
       end
     end
   end

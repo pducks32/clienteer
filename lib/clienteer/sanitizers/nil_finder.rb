@@ -5,7 +5,7 @@ module Clienteer
 
       def process(row)
         raw = row[:raw]
-        attrs = [row, raw, raw.first_name, raw.last_name, raw.email]
+        attrs = [row, raw, raw.first_name, raw.last_name, raw.email, raw.address]
         if contains_nils? attrs
           row[:reason] = "contains nils"
           $skipped_people << row
