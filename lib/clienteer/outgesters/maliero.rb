@@ -37,9 +37,7 @@ module Clienteer
             binding.pry
             errored = @clients.select{ |b| !b.errors.blank? }
             errored.each do |e|
-              e.save!(validate: false)
-            rescue PG::UniqueViolation
-              next
+              e.save!(validate: false) rescue next
             end
           end
         end
