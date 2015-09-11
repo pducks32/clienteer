@@ -18,7 +18,6 @@ module Clienteer
           c.gender = row[:raw].gender
           # c.blood_work = row["blood_work"]
           # c.constant_contact = row["constant_contact"]
-          c.email = row[:raw].email
           c.health_profile = true
           c.ideal_subscription_id = row.fetch("ideal_subscription_id", "").to_s
           c.ideal_protein_subscription = !row.fetch("ideal_subscription_id", "").blank?
