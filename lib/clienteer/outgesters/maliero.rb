@@ -38,9 +38,9 @@ module Clienteer
             errored = @clients.select{ |b| !b.errors.blank? }
             errored.each do |e|
               e.save!(validate: false)
+            rescue PG::UniqueViolation
+              next
             end
-            # do something with the errored values
-            raise ActiveRecord::Rollback
           end
         end
       end
