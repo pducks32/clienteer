@@ -26,12 +26,12 @@ module Clienteer
     $skipped_people = []
     job_definition = Kiba.parse do
       source ingestor
-      transform Sanitizer::NilFinder
-      transform Sanitizer::Name
-      transform Digester::IdealProteinCrossReference
-      transform Digester::AddressCreation
-      transform Sanitizer::Address
-      transform Digester::PhaseCreation
+      # transform Sanitizer::NilFinder
+      # transform Sanitizer::Name
+      # transform Digester::IdealProteinCrossReference
+      # transform Digester::AddressCreation
+      # transform Sanitizer::Address
+      # transform Digester::PhaseCreation
       destination Outgester::Maliero
     end
 

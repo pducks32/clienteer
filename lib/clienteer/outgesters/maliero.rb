@@ -18,14 +18,12 @@ module Clienteer
           # c.constant_contact = row["constant_contact"]
           c.email = row[:raw].email
           c.health_profile = true
-          c.ideal_subscription_id = row["ideal_subscription_id"].to_s
-          c.ideal_protein_subscription = !row["ideal_subscription_id"].nil?
+          c.ideal_subscription_id = row.fetch("ideal_subscription_id", "").to_s
+          c.ideal_protein_subscription = !row.fetch("ideal_subscription_id", "").blank?
           # c.needs_blood_work = row["needs_blood_work"]
           # c.newsletter = row["newsletter"]
           c.notes = row[:raw].notes
-          c.phase = row["phase"]
           c.phone_number = row[:raw].home_phone || row[:raw].mobile_phone || nil
-          c.address = row["address"]
           c.build_referral
           c.build_fitness_profile
         end
